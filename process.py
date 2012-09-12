@@ -18,7 +18,7 @@ class VideoProcess(object):
             if i == 1:
                 number_frame = 27
             else:
-                number_frame = frames_bloc * (i - 1)
+                number_frame = frames_bloc * (i - 1)	    	
             processos[i] = Process(target = shotvideo.shotDetect, args = (queue_list[i-1],captures[i], \
                 sensitivity, number_frame, frames_bloc * i + 1, FileName, fileNameSave, fileVideoSave, file_atual, i, ncpus))
         self.start_video_process(processos,ncpus)
