@@ -18,7 +18,7 @@ if __name__ == "__main__":
     cutvideo = CutVideo()
     captures = {}
     cut_list=[]
-    sensitivity = 0.3
+    sensitivity = 0.35
     ncpus = cpu_count()
     for video in os.listdir(file_atual + "/videos"):
         queue_list=[] 
@@ -46,8 +46,10 @@ if __name__ == "__main__":
       
         for i in range(ncpus):
             cut_list.extend(queue_list[i].get())
-        print cut_list
-        corte = cutvideo.position_cut_list(cut_list,ncpus)
+	print cut_list		
+	cut_list = [round(x,6) for x in cut_list]        
+	print cut_list	
+	corte = cutvideo.position_cut_list(cut_list,ncpus)
         print  corte
         videoprocess.create_cut_process(FileName,fileVideoSave,file_atual,corte,ncpus)
     print time.time() - w        
