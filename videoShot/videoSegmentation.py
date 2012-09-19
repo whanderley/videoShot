@@ -48,9 +48,7 @@ def videoShot(args):
 	for i in range(ncpus):
 		cut_list.extend(queue_list[i].get())
 	cut_list = [round(x,6) for x in cut_list]        
-	import pdb;pdb.set_trace()
 	corte = cutvideo.position_cut_list(cut_list,ncpus)
-	import pdb;pdb.set_trace()
 	videoprocess.create_cut_process(FileName,fileVideoSave,file_atual,corte,ncpus)
 	print "A segmentacao foi concluida em : %.2f segundos " % (time.time() - w) 
 	       
