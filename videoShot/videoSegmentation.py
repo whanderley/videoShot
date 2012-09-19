@@ -10,7 +10,7 @@ from multiprocessing import Process, cpu_count, Queue
 from process import VideoProcess
 
  
-if __name__ == "__main__":
+def videoShot(args):
 	w = time.time()
 	file_atual = os.getcwd()
 	initExtract = InitExtract()
@@ -22,7 +22,7 @@ if __name__ == "__main__":
 	sensitivity = 0.35
 	ncpus = cpu_count()
 	queue_list=[]
-	FileName = sys.argv[1]
+	FileName = args[1]
 	fileNameSave = (file_atual + '/transitions_' + 'video' + '/')
 	fileVideoSave = (file_atual + '/parts_' + 'video'+'/')
 	for files in (fileNameSave, fileVideoSave):
@@ -43,12 +43,14 @@ if __name__ == "__main__":
 		captures[i] = initExtract.createCapture(FileName)
 		captures[i] = initExtract.pass_frames(captures[i], frames_bloc, i - 1)
 	j = time.time()		
-	videoprocess.create_video_process(captures,sensitivity,frames_bloc,FileName,fileNameSave,fileVideoSave,file_atual,ncpus,queue_list) 
-	  
+	videoprocess.create_video_process(captures,sensitivity,frames_bloc,FileName,fileNameSave,fileVideoSave,file_atual,ncpus,queue_list)   
+	import pdb;pdb.set_trace()
 	for i in range(ncpus):
 		cut_list.extend(queue_list[i].get())
 	cut_list = [round(x,6) for x in cut_list]        
+	import pdb;pdb.set_trace()
 	corte = cutvideo.position_cut_list(cut_list,ncpus)
+	import pdb;pdb.set_trace()
 	videoprocess.create_cut_process(FileName,fileVideoSave,file_atual,corte,ncpus)
 	print "A segmentacao foi concluida em : %.2f segundos " % (time.time() - w) 
 	       
