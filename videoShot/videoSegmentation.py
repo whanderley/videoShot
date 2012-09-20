@@ -22,9 +22,10 @@ def videoShot(args):
 	sensitivity = 0.35
 	ncpus = cpu_count()
 	queue_list=[]
-	FileName = args[1]
-	fileNameSave = (file_atual + '/transitions_' + 'video' + '/')
-	fileVideoSave = (file_atual + '/parts_' + 'video'+'/')
+	FileName = args[args.index('-i') + 1]
+	output = args[args.index('-o') + 1]
+	fileNameSave = (output + '/transitions_' + 'video' + '/')
+	fileVideoSave = (output + '/parts_' + 'video'+'/')
 	for files in (fileNameSave, fileVideoSave):
 		try:
 			shutil.rmtree(files)
@@ -44,7 +45,6 @@ def videoShot(args):
 		captures[i] = initExtract.pass_frames(captures[i], frames_bloc, i - 1)
 	j = time.time()		
 	videoprocess.create_video_process(captures,sensitivity,frames_bloc,FileName,fileNameSave,fileVideoSave,file_atual,ncpus,queue_list)   
-	import pdb;pdb.set_trace()
 	for i in range(ncpus):
 		cut_list.extend(queue_list[i].get())
 	cut_list = [round(x,6) for x in cut_list]        
